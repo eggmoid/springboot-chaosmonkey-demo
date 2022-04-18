@@ -10,6 +10,8 @@ sourceCompatibility = '11'
 
 compileJava {
   options.compilerArgs = [
+    '-Amapstruct.suppressGeneratorTimestamp=true',
+    '-Amapstruct.suppressGeneratorVersionInfoComment=true',
     '-Amapstruct.defaultComponentModel=spring'
   ]
 }
@@ -40,8 +42,9 @@ dependencies {
 
   // querydsl
   implementation 'com.querydsl:querydsl-jpa'
-  // implementation 'com.querydsl:querydsl-apt'
-  // implementation 'com.querydsl:querydsl-core'
+  implementation 'com.querydsl:querydsl-apt'
+  implementation 'com.querydsl:querydsl-core'
+  annotationProcessor 'javax.annotation:javax.annotation-api'
   annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
   annotationProcessor "jakarta.persistence:jakarta.persistence-api"
   annotationProcessor "jakarta.annotation:jakarta.annotation-api"
@@ -62,7 +65,11 @@ dependencies {
 }
 
 sourceSets {
-  main.java.srcDirs = ['src/main/java', 'build/generated/sources/annotationProcessor/java/main']
+  main {
+    java {
+      srcDirs = ['src/main/java', 'build/generated/sources/annotationProcessor/java/main']
+    }
+  }
 }
 
 test {
