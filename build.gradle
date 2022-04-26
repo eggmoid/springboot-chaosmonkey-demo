@@ -37,6 +37,9 @@ dependencies {
   testImplementation 'org.springframework.boot:spring-boot-starter-test'
   testImplementation 'org.springframework.security:spring-security-test'
 
+  // common
+  implementation 'org.apache.commons:commons-lang3'
+
   // swagger
   implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
 
@@ -44,6 +47,7 @@ dependencies {
   implementation 'com.querydsl:querydsl-jpa'
   implementation 'com.querydsl:querydsl-apt'
   implementation 'com.querydsl:querydsl-core'
+  implementation 'com.querydsl:querydsl-sql'
   annotationProcessor 'javax.annotation:javax.annotation-api'
   annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
   annotationProcessor "jakarta.persistence:jakarta.persistence-api"

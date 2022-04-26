@@ -1,8 +1,11 @@
 package com.example.demo.api.post.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import com.example.demo.api.post.dto.PostInfoRes;
+import com.example.demo.api.post.dto.PostRankRes;
 import com.example.demo.api.post.dto.PostSaveReq;
 import com.example.demo.api.post.dto.PostSaveRes;
 import com.example.demo.api.post.service.PostService;
@@ -51,6 +54,15 @@ public class PostController {
   @GetMapping
   public Page<PostInfoRes> retrievePostInfoList(@ParameterObject Pageable pageable) {
     return postService.retrievePostInfoList(pageable);
+  }
+
+  @Operation(summary = "게시글 랭킹 조회", description = "게시글 랭킹 조회 API 설명")
+  @ApiResponses({
+      @ApiResponse(responseCode = "200", description = "조회 성공"),
+  })
+  @GetMapping("/rank")
+  public List<PostRankRes> retrievePostRankList() {
+    return postService.retrievePostRankList();
   }
 
 }
