@@ -1,10 +1,8 @@
 spring:
   profiles:
-    active: local
+    active: local,chaos-monkey
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    # hikari:
-    #   maximumPoolSize: 10
   jpa:
     database-platform: org.hibernate.dialect.MariaDB103Dialect
     properties:
@@ -29,6 +27,56 @@ logging:
             sql: trace
 jwt:
   secret-key: 95527733-25a0-413e-8c75-432703ed5e70
+
+management:
+  endpoint:
+    chaosmonkey:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+chaos:
+  monkey:
+    enabled: true
+    watcher:
+      # controller: true
+      restcontroller: true
+      # service: true
+      # repository: true
+      # component: true
+    assaults:
+      level: 1
+
+      # # Latency Assault
+      latencyRangeStart: 2000
+      latencyRangeEnd: 2000
+      latencyActive: true
+
+      # # Exception Assault
+      # exceptionsActive: true
+      # exception:
+      #   type: javax.persistence.PersistenceException
+      #   arguments:
+      #     - className: java.lang.String
+      #       value: Custum Exception Test
+
+      # # AppKiller Assault
+      # killApplicationActive: true
+      # runtimeAssaultCronExpression: "0 */10 * * * ?"
+
+      # # Memory leak Assault
+      # memoryActive: true
+      # memoryMillisecondsHoldFilledMemory: 60000 # 60s
+      # memoryMillisecondsWaitNextIncrease: 2000 # 2s
+      # memoryFillIncrementFraction: 1
+      # memoryFillTargetFraction: 0.5
+      # runtimeAssaultCronExpression: "0 */3 * * * ?"
+
+      # # Custom Watcher
+      # watched-custom-services:
+      #   - com.example.demo.api.post.controller.PostController.retrievePostRankList3
+      #   - com.example.demo.api.post.service.PostService.retrievePostRankList3
 
 ---
 spring:

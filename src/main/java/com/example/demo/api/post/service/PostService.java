@@ -1,5 +1,6 @@
 package com.example.demo.api.post.service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,6 +13,8 @@ import com.example.demo.api.post.repository.PostCustomRepository;
 import com.example.demo.api.post.repository.PostRepository;
 
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class PostService {
+
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
   private final PostRepository postRepository;
   private final PostCustomRepository postCustomRepository;
@@ -55,6 +60,31 @@ public class PostService {
       p.setPostRank(rank++);
 
     return postRankResList;
+  }
+
+  @Transactional(readOnly = true)
+  public String retrieveTest1() {
+    log.info("T1 service 들어옴");
+
+    String s = "1";
+
+    log.info("T1 service 나감");
+
+    return s;
+  }
+
+  @Transactional(readOnly = true, timeout = 1)
+  public String retrieveTest2() {
+    log.info("T2 service 들어옴");
+
+    String s = "2";
+    long current = Calendar.getInstance().getTimeInMillis();
+    while (Calendar.getInstance().getTimeInMillis() - current < 2000) {
+    }
+
+    log.info("T2 service 나감");
+
+    return s;
   }
 
 }

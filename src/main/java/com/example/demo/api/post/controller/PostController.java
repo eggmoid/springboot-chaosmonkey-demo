@@ -10,6 +10,8 @@ import com.example.demo.api.post.dto.PostSaveReq;
 import com.example.demo.api.post.dto.PostSaveRes;
 import com.example.demo.api.post.service.PostService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,6 +35,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/posts")
 @Tag(name = "게시글 관련 컨트롤러")
 public class PostController {
+
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
   private final PostService postService;
 
@@ -65,4 +69,21 @@ public class PostController {
     return postService.retrievePostRankList();
   }
 
+  @GetMapping("/t1")
+  public String retrieveTest1() {
+    log.info("=======================================");
+    log.info("T1 restcontroller -> service start");
+    String s = postService.retrieveTest1();
+    log.info("T1 restcontroller -> service end");
+    return s;
+  }
+
+  @GetMapping("/t2")
+  public String retrieveTest2() {
+    log.info("=======================================");
+    log.info("T2 restcontroller -> service start");
+    String s = postService.retrieveTest2();
+    log.info("T2 restcontroller -> service end");
+    return s;
+  }
 }
